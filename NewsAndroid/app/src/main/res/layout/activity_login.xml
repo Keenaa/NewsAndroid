@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.example.esgi.newsandroid.MainActivity"
+    tools:context="com.example.esgi.newsandroid.LoginActivity"
     android:background="@drawable/background_login">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/login_title"
         android:layout_width="305dp"
         android:layout_height="40dp"
         android:text="@string/app_name"
@@ -20,18 +20,20 @@
         tools:layout_editor_absoluteY="129dp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/login_email"
         android:layout_width="310dp"
         android:layout_height="41dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/round_edit"
         android:hint="EMAIL"
+        android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textColorHint="@android:color/background_light"
         tools:layout_editor_absoluteX="33dp"
         tools:layout_editor_absoluteY="199dp" />
 
     <EditText
+        android:id="@+id/login_password"
         android:layout_width="310dp"
         android:layout_height="41dp"
         android:layout_marginEnd="50dp"
@@ -44,7 +46,7 @@
         tools:layout_editor_absoluteY="257dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_button"
         android:layout_width="306dp"
         android:layout_height="39dp"
         android:text="LOGIN"
@@ -54,7 +56,7 @@
         android:textColor="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/login_get_password"
         android:layout_width="305dp"
         android:layout_height="19dp"
         android:text="New member?"
@@ -65,7 +67,7 @@
         android:textColor="@android:color/background_light"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/login_signin"
         android:layout_width="305dp"
         android:layout_height="19dp"
         android:text="Forgot your password ?"
