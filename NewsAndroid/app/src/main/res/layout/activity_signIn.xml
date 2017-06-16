@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.esgi.newsandroid.SignInActivity"
+    tools:context="com.example.esgi.newsandroid.activity.SignInActivity"
     android:background="@drawable/background_login">
 
     <EditText
