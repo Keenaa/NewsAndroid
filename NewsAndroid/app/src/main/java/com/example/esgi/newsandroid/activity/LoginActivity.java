@@ -51,5 +51,11 @@ public class LoginActivity extends AppCompatActivity {
                 authenticationNetwork.login(user, password.getText().toString());
             }
         });
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

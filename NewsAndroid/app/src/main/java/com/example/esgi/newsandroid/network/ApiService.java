@@ -23,7 +23,7 @@ public interface ApiService {
     Call<String> login(@Body JSONObject bodyLogin);
 
     @POST("/auth/subscribe")
-    void subscribe(@Body JSONObject bodySubscribe, Callback<JSONObject> callback);
+    Call<String> sigIn(@Body JSONObject bodySubscribe);
 
     //COMMENT
     //NEWS

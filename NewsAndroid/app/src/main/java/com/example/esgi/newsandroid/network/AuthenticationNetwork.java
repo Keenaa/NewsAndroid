@@ -22,7 +22,7 @@ public class AuthenticationNetwork {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    ApiService service = retrofit.create(ApiService.class);
+    private ApiService service = retrofit.create(ApiService.class);
 
     public void login(UserManager user, String password){
         Map<String, String > map = new HashMap<String, String>();
@@ -31,11 +31,19 @@ public class AuthenticationNetwork {
 
         JSONObject loginCredentials = new JSONObject(map);
         Call<String> login = service.login(loginCredentials);
-        System.out.print(login);
 
     }
 
-    public void signIn(String email, String password, String firstname, String lastname){
+    public void signIn(UserManager user, String password){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("email", user.getEmail());
+        map.put("password", password);
+        map.put("firstname", user.getFirstname());
+        map.put("lastname", user.getLastname());
+
+        JSONObject sigInCredentials = new JSONObject(map);
+        Call<String> signIn = service.sigIn(sigInCredentials);
+
 
     }
 }
