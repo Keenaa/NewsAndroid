@@ -33,7 +33,7 @@
         android:background="@drawable/round_edit"
         android:ems="10"
         android:hint="Password"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:textAlignment="center"
         android:textColorHint="@android:color/background_light"
         android:textColor="@android:color/background_light" />
@@ -79,7 +79,7 @@
         android:layout_below="@+id/signin_lastname"
         android:layout_marginTop="35dp"
         android:background="@drawable/round_button"
-        android:text="Button"
+        android:text="Sign in"
         android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

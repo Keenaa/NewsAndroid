@@ -1,7 +1,7 @@
 package com.example.esgi.newsandroid.network;
 
 import com.example.esgi.newsandroid.models.Login;
-import com.example.esgi.newsandroid.models.Token;
+import com.example.esgi.newsandroid.models.User;
 
 import org.json.JSONObject;
 
@@ -17,6 +17,6 @@ public interface AuthenticationNetwork {
     Call<String> login(@Body Login bodyLogin);
 
     @POST("/auth/subscribe")
-    Call<String> sigIn(@Body JSONObject bodySubscribe);
+    Call<Void> signIn(@Body User bodySubscribe);
 
 }

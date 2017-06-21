@@ -1,6 +1,6 @@
 package com.example.esgi.newsandroid.models;
 
-import com.example.esgi.newsandroid.manager.User;
+import com.example.esgi.newsandroid.models.User;
 
 /**
  * Created by meryl on 20/06/2017.

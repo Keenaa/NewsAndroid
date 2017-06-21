@@ -6,11 +6,9 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.esgi.newsandroid.models.Login;
-import com.example.esgi.newsandroid.models.Token;
+import com.example.esgi.newsandroid.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -19,8 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
 
 /**
  * Created by meryl on 14/06/2017.
@@ -28,6 +24,7 @@ import retrofit2.http.POST;
 
 public class ApiService {
     public static final int HTTP_200 = 200;
+    public static final int HTTP_201 = 201;
     public static final int HTTP_204 = 204;
     public static final int HTTP_400 = 400;
     public static final int HTTP_401 = 401;
@@ -67,7 +64,7 @@ public class ApiService {
         this.authenticationNetwork = retrofit.create(AuthenticationNetwork.class);
     }
 
-    // USERS SERVICES
+    // AUTH SERVICES
     public void authentication(Login login, final ApiResult<String> callback){
         Log.d("START AUTH", "OK");
         if(verifyConnection()){
@@ -96,6 +93,38 @@ public class ApiService {
             });
         }
     }
+
+    public void createUser(User user, final ApiResult<String> callback){
+        Log.d("START SIGNIN", "OK");
+        if(verifyConnection()){
+            Log.d("CONNECTION", "OK");
+            Call<Void> call = this.authenticationNetwork.signIn(user);
+            Log.d("URL", this.authenticationNetwork.signIn(user).request().url().toString());
+            call.enqueue(new Callback<Void>() {
+
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Log.d("RESPONSE CODE", " " + response.code());
+                    if(response.code() == HTTP_201){
+                        Log.d("SUCCESS", "OK");
+                        callback.success("Good");
+                    } else {
+                        try {
+                            callback.error(response.code(),response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
     public interface ApiResult<T> {
         void success(T res);
 

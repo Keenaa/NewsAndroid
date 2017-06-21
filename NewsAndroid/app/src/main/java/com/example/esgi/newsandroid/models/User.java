@@ -1,15 +1,22 @@
-package com.example.esgi.newsandroid.manager;
+package com.example.esgi.newsandroid.models;
 
-/**
- * Created by meryl on 14/06/2017.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class User {
+
+    @SerializedName("email")
+    @Expose
     private String email;
-    private String id;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("firstname")
+    @Expose
     private String firstname;
+    @SerializedName("lastname")
+    @Expose
     private String lastname;
-    private String token;
 
     public String getEmail() {
         return email;
@@ -19,12 +26,12 @@ public class User {
         this.email = email;
     }
 
-    public String getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstname() {
@@ -43,11 +50,4 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

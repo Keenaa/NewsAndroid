@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.example.esgi.newsandroid.R;
 import com.example.esgi.newsandroid.models.SessionData;
-import com.example.esgi.newsandroid.models.Token;
 import com.example.esgi.newsandroid.network.ApiService;
-import com.example.esgi.newsandroid.network.AuthenticationNetwork;
 import com.example.esgi.newsandroid.models.Login;
 import com.google.gson.Gson;
 
@@ -32,11 +30,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         email = (EditText)findViewById(R.id.login_email);
         password = (EditText)findViewById(R.id.login_password);
         login_button = (Button)findViewById(R.id.login_button);
         signin = (TextView)findViewById(R.id.login_signin);
+
         final Login login = new Login();
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
