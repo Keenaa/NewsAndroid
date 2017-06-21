@@ -11,16 +11,16 @@
         android:id="@+id/signin_email"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="121dp"
         android:background="@drawable/round_edit"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textColorHint="@android:color/background_light"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/signin_password"

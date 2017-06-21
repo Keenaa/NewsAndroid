@@ -25,10 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiService {
     public static final int HTTP_200 = 200;
     public static final int HTTP_201 = 201;
-    public static final int HTTP_204 = 204;
-    public static final int HTTP_400 = 400;
-    public static final int HTTP_401 = 401;
-    public static final int HTTP_404 = 404;
 
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
     private static final String TAG_STATUS = " status: ";
