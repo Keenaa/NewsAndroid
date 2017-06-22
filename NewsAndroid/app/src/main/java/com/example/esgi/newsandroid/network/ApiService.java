@@ -6,11 +6,13 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.esgi.newsandroid.models.Login;
+import com.example.esgi.newsandroid.models.Topic;
 import com.example.esgi.newsandroid.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,8 +31,12 @@ public class ApiService {
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
     private static final String TAG_STATUS = " status: ";
     private static final ApiService INSTANCE = new ApiService();
+
     private static Context mContext;
+
     protected AuthenticationNetwork authenticationNetwork;
+    protected TopicsNetwork topicsNetwork;
+
     private Retrofit retrofit;
 
     protected ApiService() {
@@ -120,6 +126,35 @@ public class ApiService {
             });
         }
     }
+
+    //TOPICS
+    public void getTopics(final ApiResult<ArrayList<Topic>> callback){
+        if(verifyConnection()){
+            Call<ArrayList<Topic>> call = this.topicsNetwork.getTopics();
+            call.enqueue(new Callback<ArrayList<Topic>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Topic>> call, Response<ArrayList<Topic>> response) {
+                    int statusCode = response.code();
+                    if(statusCode == HTTP_200){
+                        ArrayList<Topic> topics = response.body();
+                        callback.success(topics);
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Topic>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+
+
+
+
 
     public interface ApiResult<T> {
         void success(T res);

@@ -2,4 +2,11 @@
     <string name="app_name">News</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="topics_name">Topics</string>
+    <string name="news_name">News</string>
+    <string name="posts_name">Posts</string>
+    <string name="profil_name">Profil</string>
+    <string name="comments_name">Comments</string>
+    <string name="logout">Logout</string>
+
 </resources>

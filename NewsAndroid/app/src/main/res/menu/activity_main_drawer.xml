@@ -5,17 +5,17 @@
             <menu>
                 <item
                     android:id="@+id/nav_my_profile"
-                    android:title="Profil" />
+                    android:title="@string/profil_name" />
                 <item
                     android:id="@+id/nav_logout"
-                    android:title="Deconnexion"/>
+                    android:title="@string/logout"/>
             </menu>
         </item>
-        <item android:title="News"
+        <item android:title="@string/news_name"
             android:id="@+id/nav_news" />
         <item
             android:id="@+id/nav_topics"
-            android:title="Topics"/>
+            android:title="@string/topics_name"/>
 
     </group>
 </menu>
