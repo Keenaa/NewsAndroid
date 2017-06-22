@@ -18,6 +18,12 @@ public class Topic {
     @SerializedName("date")
     @Expose
     private String date;
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("author")
+    @Expose
+    private String author;
 
     public String getTitle() {
         return title;
@@ -43,6 +49,21 @@ public class Topic {
         this.date = date;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }
 
 

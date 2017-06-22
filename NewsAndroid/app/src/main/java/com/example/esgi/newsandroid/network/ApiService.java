@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiService {
     public static final int HTTP_200 = 200;
     public static final int HTTP_201 = 201;
+    public static final int HTTP_204 = 204;
 
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
     private static final String TAG_STATUS = " status: ";
@@ -145,6 +146,73 @@ public class ApiService {
 
                 @Override
                 public void onFailure(Call<ArrayList<Topic>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void getTopicById(Topic topic, final ApiResult<Topic> callback){
+        if (verifyConnection()){
+            Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId());
+            call.enqueue(new Callback<Topic>() {
+                @Override
+                public void onResponse(Call<Topic> call, Response<Topic> response) {
+                    int statusCode = response.code();
+                    if (statusCode == HTTP_200){
+                        Topic topic = response.body();
+                        callback.success(topic);
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Topic> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void deleteTopic(Topic topic, final ApiResult<String> callback){
+       if(verifyConnection()){
+           Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+           call.enqueue(new Callback<Void>() {
+               @Override
+               public void onResponse(Call<Void> call, Response<Void> response) {
+                   int statusCode = response.code();
+                   if (statusCode == HTTP_204){
+                       callback.success("DELETED");
+                   } else {
+                       callback.error(statusCode, response.message());
+                   }
+               }
+
+               @Override
+               public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+               }
+           });
+       }
+    }
+
+    public void updateTopic(Topic topic, final ApiResult<String> callback){
+        if(verifyConnection()){
+            Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    int statusCode = response.code();
+                    if (statusCode == HTTP_204){
+                        callback.success("DELETED");
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
                     t.printStackTrace();
                 }
             });
