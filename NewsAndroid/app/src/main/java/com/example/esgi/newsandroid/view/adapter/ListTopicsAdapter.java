@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.esgi.newsandroid.R;
-import com.example.esgi.newsandroid.fragment.ListTopicsFragment;
 import com.example.esgi.newsandroid.models.Topic;
+import com.example.esgi.newsandroid.view.holder.ListTopicsViewHolder;
 
 import java.util.List;
 

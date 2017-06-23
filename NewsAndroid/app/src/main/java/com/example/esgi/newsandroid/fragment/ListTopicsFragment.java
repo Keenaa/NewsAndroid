@@ -1,7 +1,7 @@
 package com.example.esgi.newsandroid.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +26,7 @@ public class ListTopicsFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     ArrayList<Topic> topics;
+    ListTopicsAdapter listTopicsAdapter;
 
     public ListTopicsFragment(){
 
@@ -45,24 +46,22 @@ public class ListTopicsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     private void initView(){
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        getRemarks();
+        getTopics();
         recyclerView.setLayoutManager(llm);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getRemarks();
+                getTopics();
             }
         });
 
     }
 
-    private void getRemarks(){
+    private void getTopics(){
 
         ApiService.getInstance(getContext()).getTopics(new ApiService.ApiResult<ArrayList<Topic>>() {
             @Override

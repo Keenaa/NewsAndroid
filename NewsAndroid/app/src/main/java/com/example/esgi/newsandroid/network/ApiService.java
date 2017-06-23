@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.esgi.newsandroid.models.Login;
+import com.example.esgi.newsandroid.models.SessionData;
 import com.example.esgi.newsandroid.models.Topic;
 import com.example.esgi.newsandroid.models.User;
 import com.google.gson.Gson;
@@ -65,6 +66,7 @@ public class ApiService {
         this.retrofit = retrofitBuilder.build();
 
         this.authenticationNetwork = retrofit.create(AuthenticationNetwork.class);
+        this.topicsNetwork = retrofit.create(TopicsNetwork.class);
     }
 
     // AUTH SERVICES
@@ -131,7 +133,7 @@ public class ApiService {
     //TOPICS
     public void getTopics(final ApiResult<ArrayList<Topic>> callback){
         if(verifyConnection()){
-            Call<ArrayList<Topic>> call = this.topicsNetwork.getTopics();
+            Call<ArrayList<Topic>> call = this.topicsNetwork.getTopics("Bearer " + SessionData.getINSTANCE().getToken());
             call.enqueue(new Callback<ArrayList<Topic>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Topic>> call, Response<ArrayList<Topic>> response) {
@@ -229,6 +231,7 @@ public class ApiService {
 
         void error(int code, String message);
     }
+
     public boolean verifyConnection() {
         if (mContext == null) {
             return false;
