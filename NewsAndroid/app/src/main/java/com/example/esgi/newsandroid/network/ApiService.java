@@ -6,11 +6,14 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.esgi.newsandroid.models.Login;
+import com.example.esgi.newsandroid.models.SessionData;
+import com.example.esgi.newsandroid.models.Topic;
 import com.example.esgi.newsandroid.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,15 +29,16 @@ public class ApiService {
     public static final int HTTP_200 = 200;
     public static final int HTTP_201 = 201;
     public static final int HTTP_204 = 204;
-    public static final int HTTP_400 = 400;
-    public static final int HTTP_401 = 401;
-    public static final int HTTP_404 = 404;
 
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
     private static final String TAG_STATUS = " status: ";
     private static final ApiService INSTANCE = new ApiService();
+
     private static Context mContext;
+
     protected AuthenticationNetwork authenticationNetwork;
+    protected TopicsNetwork topicsNetwork;
+
     private Retrofit retrofit;
 
     protected ApiService() {
@@ -62,6 +66,7 @@ public class ApiService {
         this.retrofit = retrofitBuilder.build();
 
         this.authenticationNetwork = retrofit.create(AuthenticationNetwork.class);
+        this.topicsNetwork = retrofit.create(TopicsNetwork.class);
     }
 
     // AUTH SERVICES
@@ -125,11 +130,108 @@ public class ApiService {
         }
     }
 
+    //TOPICS
+    public void getTopics(final ApiResult<ArrayList<Topic>> callback){
+        if(verifyConnection()){
+            Call<ArrayList<Topic>> call = this.topicsNetwork.getTopics("Bearer " + SessionData.getINSTANCE().getToken());
+            call.enqueue(new Callback<ArrayList<Topic>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Topic>> call, Response<ArrayList<Topic>> response) {
+                    int statusCode = response.code();
+                    if(statusCode == HTTP_200){
+                        ArrayList<Topic> topics = response.body();
+                        callback.success(topics);
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Topic>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void getTopicById(Topic topic, final ApiResult<Topic> callback){
+        if (verifyConnection()){
+            Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId());
+            call.enqueue(new Callback<Topic>() {
+                @Override
+                public void onResponse(Call<Topic> call, Response<Topic> response) {
+                    int statusCode = response.code();
+                    if (statusCode == HTTP_200){
+                        Topic topic = response.body();
+                        callback.success(topic);
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Topic> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void deleteTopic(Topic topic, final ApiResult<String> callback){
+       if(verifyConnection()){
+           Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+           call.enqueue(new Callback<Void>() {
+               @Override
+               public void onResponse(Call<Void> call, Response<Void> response) {
+                   int statusCode = response.code();
+                   if (statusCode == HTTP_204){
+                       callback.success("DELETED");
+                   } else {
+                       callback.error(statusCode, response.message());
+                   }
+               }
+
+               @Override
+               public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+               }
+           });
+       }
+    }
+
+    public void updateTopic(Topic topic, final ApiResult<String> callback){
+        if(verifyConnection()){
+            Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    int statusCode = response.code();
+                    if (statusCode == HTTP_204){
+                        callback.success("DELETED");
+                    } else {
+                        callback.error(statusCode, response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+
+
+
+
+
     public interface ApiResult<T> {
         void success(T res);
 
         void error(int code, String message);
     }
+
     public boolean verifyConnection() {
         if (mContext == null) {
             return false;

@@ -11,6 +11,7 @@ public class SessionData {
     private static final SessionData INSTANCE = new SessionData();
     private String token;
     private User currentUser;
+    private Topic currentTopic;
 
     public static SessionData getINSTANCE() {
         return INSTANCE;
@@ -30,5 +31,13 @@ public class SessionData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Topic getCurrentTopic() {
+        return currentTopic;
+    }
+
+    public void setCurrentTopic(Topic currentTopic) {
+        this.currentTopic = currentTopic;
     }
 }
