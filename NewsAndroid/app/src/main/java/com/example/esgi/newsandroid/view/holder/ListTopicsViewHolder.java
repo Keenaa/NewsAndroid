@@ -15,9 +15,9 @@ import com.example.esgi.newsandroid.models.Topic;
 
 public class ListTopicsViewHolder extends RecyclerView.ViewHolder {
 
-    TextView topicCellTitle;
-    TextView topicCellDate;
-    TextView topicCellContent;
+    private TextView topicCellTitle;
+    private TextView topicCellDate;
+    private TextView topicCellContent;
 
     private Topic currentTopic;
 
@@ -31,7 +31,7 @@ public class ListTopicsViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 SessionData.getINSTANCE().setCurrentTopic(currentTopic);
                 if(v.getContext() instanceof  MainActivity) {
-                    ((MainActivity)v.getContext()).displayListTopics();
+                    ((MainActivity)v.getContext()).displayTopicDetails();
                 }
 
             }

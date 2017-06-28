@@ -12,6 +12,7 @@ public class SessionData {
     private String token;
     private User currentUser;
     private Topic currentTopic;
+    private Post currentPost;
 
     public static SessionData getINSTANCE() {
         return INSTANCE;
@@ -39,5 +40,13 @@ public class SessionData {
 
     public void setCurrentTopic(Topic currentTopic) {
         this.currentTopic = currentTopic;
+    }
+
+    public Post getCurrentPost() {
+        return currentPost;
+    }
+
+    public void setCurrentPost(Post currentPost) {
+        this.currentPost = currentPost;
     }
 }

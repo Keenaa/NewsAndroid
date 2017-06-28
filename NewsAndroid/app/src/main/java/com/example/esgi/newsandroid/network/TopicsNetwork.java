@@ -5,9 +5,11 @@ import com.example.esgi.newsandroid.models.Topic;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -17,17 +19,22 @@ import retrofit2.http.Path;
 
 public interface TopicsNetwork {
 
-    public static final String ID_TOPIC = "topic";
+    String ID_TOPIC = "topic";
 
     @GET("/topics")
     Call<ArrayList<Topic>> getTopics(@Header("Authorization") String auth);
 
-    @GET("/topics/{id")
-    Call<Topic> getTopicById(@Path(ID_TOPIC) String idTopic);
+    @GET("/topics/{id}")
+    Call<Topic> getTopicById(@Path(ID_TOPIC) String idTopic, @Header("Authorization") String auth);
 
     @DELETE("/topics/{id}")
-    Call<Void> deleteTopic(@Path(ID_TOPIC) String idTopic);
+    Call<Void> deleteTopic(@Path(ID_TOPIC) String idTopic, @Header("Authorization") String auth);
 
     @PUT("/topics/{id}")
-    Call<Void> updateTopic(@Path(ID_TOPIC) String idTopic);
+    Call<Void> updateTopic(@Path(ID_TOPIC) String idTopic, @Header("Authorization") String auth);
+
+    @POST("/topics")
+    Call<Void> createTopic(@Header("Authorization") String auth, @Body Topic newTopic);
+
+
 }

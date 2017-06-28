@@ -31,7 +31,6 @@ public class ApiService {
     public static final int HTTP_204 = 204;
 
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
-    private static final String TAG_STATUS = " status: ";
     private static final ApiService INSTANCE = new ApiService();
 
     private static Context mContext;
@@ -156,7 +155,7 @@ public class ApiService {
 
     public void getTopicById(Topic topic, final ApiResult<Topic> callback){
         if (verifyConnection()){
-            Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId());
+            Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId(), "Bearer "+ SessionData.getINSTANCE().getToken());
             call.enqueue(new Callback<Topic>() {
                 @Override
                 public void onResponse(Call<Topic> call, Response<Topic> response) {
@@ -179,7 +178,7 @@ public class ApiService {
 
     public void deleteTopic(Topic topic, final ApiResult<String> callback){
        if(verifyConnection()){
-           Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+           Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId(), "Bearer "+ SessionData.getINSTANCE().getToken());
            call.enqueue(new Callback<Void>() {
                @Override
                public void onResponse(Call<Void> call, Response<Void> response) {
@@ -201,7 +200,7 @@ public class ApiService {
 
     public void updateTopic(Topic topic, final ApiResult<String> callback){
         if(verifyConnection()){
-            Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId());
+            Call<Void> call = this.topicsNetwork.deleteTopic(topic.getId(), "Bearer "+ SessionData.getINSTANCE().getToken());
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {

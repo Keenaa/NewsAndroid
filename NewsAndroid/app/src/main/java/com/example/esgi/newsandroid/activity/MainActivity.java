@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.esgi.newsandroid.R;
+import com.example.esgi.newsandroid.fragment.DetailTopicFragment;
 import com.example.esgi.newsandroid.fragment.ListTopicsFragment;
 
 import static com.example.esgi.newsandroid.R.id.toolbar;
@@ -80,6 +81,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void displayListTopics(){
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = ListTopicsFragment.newInstance();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_activity_main, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void displayTopicDetails(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = DetailTopicFragment.newInstance();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_activity_main, fragment);
         transaction.addToBackStack(null);

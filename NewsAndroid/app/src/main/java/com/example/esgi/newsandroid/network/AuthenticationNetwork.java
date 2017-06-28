@@ -10,7 +10,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AuthenticationNetwork {
-    String TAG_API_AUTH_TOKEN = "Authorization";
 
     //AUTHENTICATION
     @POST("/auth/login")
