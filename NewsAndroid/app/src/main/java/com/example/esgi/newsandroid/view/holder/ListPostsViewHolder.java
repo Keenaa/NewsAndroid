@@ -9,6 +9,10 @@ import com.example.esgi.newsandroid.activity.MainActivity;
 import com.example.esgi.newsandroid.models.Post;
 import com.example.esgi.newsandroid.models.SessionData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by meryl on 26/06/2017.
  */
@@ -40,11 +44,21 @@ public class ListPostsViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Post post) {
         currentPost = post;
+        SimpleDateFormat finalDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         if (post.getTitle() != null) {
             postCellTitle.setText(post.getTitle());
         }
         if (post.getDate() != null) {
-            postCellDate.setText(post.getDate());
+            SimpleDateFormat actualDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = null;
+            try {
+                date = actualDateFormat.parse(post.getDate());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String postDate = finalDateFormat.format(date);
+            postCellDate.setText(postDate);
         }
         if (post.getContent() != null) {
             postCellContent.setText(post.getContent());

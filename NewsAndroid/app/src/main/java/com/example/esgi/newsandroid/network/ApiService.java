@@ -220,6 +220,36 @@ public class ApiService {
         }
     }
 
+    public void createTopic(Topic topic, final ApiResult<String> callback){
+        Log.d("START CREATE TOPIC", "OK");
+        if(verifyConnection()){
+            Log.d("CONNECTION", "OK");
+            Call<Void> call = this.topicsNetwork.createTopic(SessionData.getINSTANCE().getToken(), topic);
+            call.enqueue(new Callback<Void>() {
+
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Log.d("RESPONSE CODE", " " + response.code());
+                    if(response.code() == HTTP_201){
+                        Log.d("SUCCESS", "OK");
+                        callback.success("Good");
+                    } else {
+                        try {
+                            callback.error(response.code(),response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
 
 
 

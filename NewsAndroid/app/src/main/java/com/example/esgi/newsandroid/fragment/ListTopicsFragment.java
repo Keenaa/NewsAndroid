@@ -1,7 +1,10 @@
 package com.example.esgi.newsandroid.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,8 @@ public class ListTopicsFragment extends Fragment {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    FloatingActionButton addTopic;
+
 
     ArrayList<Topic> topics;
     ListTopicsAdapter listTopicsAdapter;
@@ -46,6 +51,21 @@ public class ListTopicsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        addTopic = (FloatingActionButton) view.findViewById(R.id.fab_add_topic);
+        addTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayAddTopic();
+            }
+        });
+    }
+    public void displayAddTopic(){
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = AddTopicFragment.newInstance();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_activity_main, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void initView(){
