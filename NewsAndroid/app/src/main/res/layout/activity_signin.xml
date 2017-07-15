@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_signin"
+    tools:context="com.example.esgi.newsandroid.activity.SignInActivity"
+    android:background="@drawable/background_login">
+
+    <EditText
+        android:id="@+id/signin_email"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="121dp"
+        android:background="@drawable/round_edit"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/signin_password"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/signin_email"
+        android:layout_alignStart="@+id/signin_email"
+        android:layout_below="@+id/signin_email"
+        android:layout_marginTop="38dp"
+        android:background="@drawable/round_edit"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light" />
+
+    <EditText
+        android:id="@+id/signin_firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/signin_password"
+        android:layout_alignStart="@+id/signin_password"
+        android:layout_below="@+id/signin_password"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/round_edit"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/signin_lastname"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/signin_firstname"
+        android:layout_alignStart="@+id/signin_firstname"
+        android:layout_below="@+id/signin_firstname"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/round_edit"
+        android:ems="10"
+        android:hint="Last Name"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/signin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/signin_lastname"
+        android:layout_alignStart="@+id/signin_lastname"
+        android:layout_below="@+id/signin_lastname"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/round_button"
+        android:text="Sign in"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>
