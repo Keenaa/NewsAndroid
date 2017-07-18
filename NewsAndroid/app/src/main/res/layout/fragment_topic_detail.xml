@@ -59,11 +59,11 @@
         </LinearLayout>
 
 
-        <!--<android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_topic_list_posts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>-->
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

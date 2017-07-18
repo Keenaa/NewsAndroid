@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.esgi.newsandroid.models.Comment;
 import com.example.esgi.newsandroid.models.Login;
 import com.example.esgi.newsandroid.models.News;
+import com.example.esgi.newsandroid.models.Post;
 import com.example.esgi.newsandroid.models.SessionData;
 import com.example.esgi.newsandroid.models.Topic;
 import com.example.esgi.newsandroid.models.User;
@@ -15,7 +16,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -44,6 +47,7 @@ public class ApiService {
     protected TopicsNetwork topicsNetwork;
     protected NewsNetwork newsNetwork;
     protected CommentsNetwork commentsNetwork;
+    protected PostsNetwork postsNetwork;
 
     private Retrofit retrofit;
 
@@ -76,6 +80,7 @@ public class ApiService {
         this.topicsNetwork = retrofit.create(TopicsNetwork.class);
         this.newsNetwork = retrofit.create(NewsNetwork.class);
         this.commentsNetwork = retrofit.create(CommentsNetwork.class);
+        this.postsNetwork = retrofit.create(PostsNetwork.class);
     }
 
     // AUTH SERVICES
@@ -179,6 +184,28 @@ public class ApiService {
         }
     }
 
+    public void getPostsForTopic(Topic topic, final ApiResult<ArrayList<Post>> callback ) {
+        if(verifyConnection()) {
+            Call<ArrayList<Post>> call = this.postsNetwork.getPostsForTopic("Bearer " + SessionData.getINSTANCE().getToken(),topic.getId());
+            call.enqueue(new Callback<ArrayList<Post>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Post>> call, Response<ArrayList<Post>> response) {
+                    int statusCode = response.code();
+                    if(statusCode == HTTP_200) {
+                        final ArrayList<Post> posts = response.body();
+                        callback.success(posts);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Post>> call, Throwable t) {
+                    Log.d("Tag Url Comment:",call.request().url().toString());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
     public void getTopicById(Topic topic, final ApiResult<Topic> callback){
         if (verifyConnection()){
             Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId(), "Bearer "+ SessionData.getINSTANCE().getToken());
@@ -277,6 +304,30 @@ public class ApiService {
     }
 
     //NEWS
+    public void getCommentForNews(News news, final ApiResult<ArrayList<Comment>> callback ) {
+        if(verifyConnection()) {
+            String url = null;
+
+            Call<ArrayList<Comment>> call = this.commentsNetwork.getCommentsForNews("Bearer " + SessionData.getINSTANCE().getToken(),news.getId());
+            call.enqueue(new Callback<ArrayList<Comment>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
+                    int statusCode = response.code();
+                    if(statusCode == HTTP_200) {
+                        final ArrayList<Comment> news = response.body();
+                        callback.success(news);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+                    Log.d("Tag Url Comment:",call.request().url().toString());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
     public void getNews(final ApiResult<ArrayList<News>> callback){
         if(verifyConnection()){
             Call<ArrayList<News>> call = this.newsNetwork.getNews("Bearer " + SessionData.getINSTANCE().getToken());
@@ -286,7 +337,7 @@ public class ApiService {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
                         final ArrayList<News> news = response.body();
-                        Realm realm = Realm.getDefaultInstance();
+                       Realm realm = Realm.getDefaultInstance();
                         realm.executeTransactionAsync(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {

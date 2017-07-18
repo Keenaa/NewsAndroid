@@ -27,7 +27,7 @@ public class RealmManager {
     }
 
     public void getCommentByNewsId(final String idNews, final ApiService.ApiResult<ArrayList<Comment>> callback) {
-        realmInstance = Realm.getDefaultInstance();
+      /*  realmInstance = Realm.getDefaultInstance();
         realmInstance.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -41,5 +41,6 @@ public class RealmManager {
                 callback.success(comments);
             }
         });
+        */
     }
 }

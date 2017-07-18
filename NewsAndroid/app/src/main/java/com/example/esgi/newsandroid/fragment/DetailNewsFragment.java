@@ -30,10 +30,6 @@ public class DetailNewsFragment extends Fragment {
     private News news;
 
     RecyclerView recyclerView;
-    SwipeRefreshLayout swipeRefreshLayout;
-    TextView postTitle;
-    TextView postContent;
-    TextView postDate;
     TextView title;
     TextView content;
 
@@ -61,22 +57,10 @@ public class DetailNewsFragment extends Fragment {
 
 
     private void loadNewsDetail(){
-        ApiService.getInstance(getContext()).getComments(new ApiService.ApiResult<Boolean>() {
+        ApiService.getInstance(getContext()).getCommentForNews(news, new ApiService.ApiResult<ArrayList<Comment>>() {
             @Override
-            public void success(Boolean res) {
-                if (res) {
-                    RealmManager.getInstance().getCommentByNewsId(news.getId(), new ApiService.ApiResult<ArrayList<Comment>>() {
-                        @Override
-                        public void success(ArrayList<Comment> res) {
-                            recyclerView.setAdapter(new ListCommentsAdapter(res));
-                        }
-
-                        @Override
-                        public void error(int code, String message) {
-                            Log.d("Error RealmManager : ",message);
-                        }
-                    });
-                }
+            public void success(ArrayList<Comment> res) {
+                recyclerView.setAdapter(new ListCommentsAdapter(res));
             }
 
             @Override
@@ -90,8 +74,7 @@ public class DetailNewsFragment extends Fragment {
         news = SessionData.getINSTANCE().getCurrentNews();
         title.setText(news.getTitle());
         content.setText(news.getContent());
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
         loadNewsDetail();
 

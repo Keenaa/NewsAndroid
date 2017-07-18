@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.esgi.newsandroid.R;
+import com.example.esgi.newsandroid.manager.NewsManager;
 import com.example.esgi.newsandroid.models.News;
 import com.example.esgi.newsandroid.network.ApiService;
 import com.example.esgi.newsandroid.view.adapter.ListNewsAdapter;
@@ -84,7 +85,9 @@ public class ListNewsFragment extends Fragment {
     }
 
     private void getNews() {
-
+        if (NewsManager.getInstance().newses.size() > 0) {
+            newsRecyclerView.setAdapter(new ListNewsAdapter(NewsManager.getInstance().newses));
+        }
         ApiService.getInstance(getContext()).getNews(new ApiService.ApiResult<ArrayList<News>>() {
             @Override
             public void success(ArrayList<News> res) {
