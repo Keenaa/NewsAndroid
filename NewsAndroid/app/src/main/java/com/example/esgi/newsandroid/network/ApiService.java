@@ -15,8 +15,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +35,6 @@ public class ApiService {
     public static final int HTTP_200 = 200;
     public static final int HTTP_201 = 201;
     public static final int HTTP_204 = 204;
-
     public static final String API_URL = "https://esgi-2017.herokuapp.com";
     private static final ApiService INSTANCE = new ApiService();
 
@@ -45,6 +48,7 @@ public class ApiService {
     private Retrofit retrofit;
 
     protected ApiService() {
+
         this.initRetrofitClient();
     }
 
@@ -144,7 +148,16 @@ public class ApiService {
                 public void onResponse(Call<ArrayList<Topic>> call, Response<ArrayList<Topic>> response) {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
-                        ArrayList<Topic> topics = response.body();
+                        final ArrayList<Topic> topics = response.body();
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmList<Topic> realmTopics = new RealmList<Topic>();
+                                realmTopics.addAll(topics);
+                                realm.copyToRealmOrUpdate(realmTopics);
+                            }
+                        });
                         callback.success(topics);
                     } else {
                         callback.error(statusCode, response.message());
@@ -156,6 +169,13 @@ public class ApiService {
                     t.printStackTrace();
                 }
             });
+        } else {
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<Topic> topics = realm.where(Topic.class).findAll();
+            ArrayList<Topic> realTopic = new ArrayList<>();
+            realTopic.addAll(topics);
+            callback.success(realTopic);
+
         }
     }
 
@@ -266,6 +286,9 @@ public class ApiService {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
                         ArrayList<News> news = response.body();
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.copyToRealmOrUpdate(news);
+                        Log.d("Response News : ",response.body().toString());
                         callback.success(news);
                     } else {
                         callback.error(statusCode, response.message());
@@ -387,6 +410,8 @@ public class ApiService {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
                         ArrayList<Comment> comments = response.body();
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.copyToRealmOrUpdate(comments);
                         callback.success(comments);
                     } else {
                         callback.error(statusCode, response.message());

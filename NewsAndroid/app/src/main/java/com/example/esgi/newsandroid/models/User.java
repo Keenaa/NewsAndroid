@@ -3,7 +3,11 @@ package com.example.esgi.newsandroid.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
+
+@RealmClass
+public class User extends RealmObject {
 
     @SerializedName("email")
     @Expose

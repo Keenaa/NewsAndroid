@@ -3,11 +3,14 @@ package com.example.esgi.newsandroid.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by meryl on 22/06/2017.
  */
 
-public class Topic {
+public class Topic extends RealmObject {
 
     @SerializedName("title")
     @Expose
@@ -20,6 +23,7 @@ public class Topic {
     private String date;
     @SerializedName("_id")
     @Expose
+    @PrimaryKey
     private String id;
     @SerializedName("author")
     @Expose

@@ -21,6 +21,8 @@ import com.example.esgi.newsandroid.fragment.ListCommentsFragment;
 import com.example.esgi.newsandroid.fragment.ListNewsFragment;
 import com.example.esgi.newsandroid.fragment.ListTopicsFragment;
 
+import io.realm.Realm;
+
 import static com.example.esgi.newsandroid.R.id.toolbar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Realm realm = Realm.getDefaultInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

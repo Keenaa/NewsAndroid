@@ -2,6 +2,7 @@ package com.example.esgi.newsandroid.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,8 +46,13 @@ public class ListNewsFragment extends Fragment {
         newsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_fragment_list_news);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_fragment_list_news);
 
-        initView();
         return rootView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initView();
     }
 
     @Override

@@ -15,6 +15,9 @@ import com.example.esgi.newsandroid.network.ApiService;
 import com.example.esgi.newsandroid.models.Login;
 import com.google.gson.Gson;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 /**
  * Created by meryl on 13/06/2017.
