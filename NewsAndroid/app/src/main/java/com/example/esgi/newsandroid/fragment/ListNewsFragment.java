@@ -45,15 +45,10 @@ public class ListNewsFragment extends Fragment {
 
         newsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_fragment_list_news);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_fragment_list_news);
-
+        initView();
         return rootView;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -76,9 +71,9 @@ public class ListNewsFragment extends Fragment {
     }
 
     private void initView(){
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        getNews();
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         newsRecyclerView.setLayoutManager(llm);
+        getNews();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +83,7 @@ public class ListNewsFragment extends Fragment {
 
     }
 
-    private void getNews(){
+    private void getNews() {
 
         ApiService.getInstance(getContext()).getNews(new ApiService.ApiResult<ArrayList<News>>() {
             @Override

@@ -48,20 +48,6 @@ public class ListNewsViewHolder extends RecyclerView.ViewHolder {
         if (news.getTitle() != null){
             newsCellTitle.setText(news.getTitle());
         }
-        if(news.getDate() != null){
-            SimpleDateFormat actualDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = null;
-            try {
-                date = actualDateFormat.parse(news.getDate());
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if(date != null) {
-                String topicDate = finalDateFormat.format(date);
-                newsCellDate.setText(topicDate);
-            }
-        }
         if(news.getContent() != null){
             newsCellContent.setText(news.getContent());
         }

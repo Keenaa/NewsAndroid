@@ -285,9 +285,16 @@ public class ApiService {
                 public void onResponse(Call<ArrayList<News>> call, Response<ArrayList<News>> response) {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
-                        ArrayList<News> news = response.body();
+                        final ArrayList<News> news = response.body();
                         Realm realm = Realm.getDefaultInstance();
-                        realm.copyToRealmOrUpdate(news);
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmList<News> realmNews = new RealmList<News>();
+                                realmNews.addAll(news);
+                                realm.copyToRealmOrUpdate(realmNews);
+                            }
+                        });
                         Log.d("Response News : ",response.body().toString());
                         callback.success(news);
                     } else {
@@ -300,6 +307,16 @@ public class ApiService {
                     t.printStackTrace();
                 }
             });
+        } else {
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<News> news = realm.where(News.class).findAll();
+            if (news.size() == 0) {
+                callback.error(404,"No entries in offline mode");
+                return;
+            }
+            ArrayList<News> realNews = new ArrayList<>();
+            realNews.addAll(news);
+            callback.success(realNews);
         }
     }
 
@@ -401,7 +418,7 @@ public class ApiService {
     }
 
     //Comments
-    public void getComments(final ApiResult<ArrayList<Comment>> callback){
+    public void getComments(final ApiResult<Boolean> callback){
         if(verifyConnection()){
             Call<ArrayList<Comment>> call = this.commentsNetwork.getComments("Bearer " + SessionData.getINSTANCE().getToken());
             call.enqueue(new Callback<ArrayList<Comment>>() {
@@ -409,10 +426,17 @@ public class ApiService {
                 public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200){
-                        ArrayList<Comment> comments = response.body();
+                        final ArrayList<Comment> comments = response.body();
                         Realm realm = Realm.getDefaultInstance();
-                        realm.copyToRealmOrUpdate(comments);
-                        callback.success(comments);
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmList<Comment> commentRealmList = new RealmList<>();
+                                commentRealmList.addAll(comments);
+                                realm.copyToRealmOrUpdate(commentRealmList);
+                                callback.success(true);
+                            }
+                        });
                     } else {
                         callback.error(statusCode, response.message());
                     }

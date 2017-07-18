@@ -48,20 +48,6 @@ public class ListTopicsViewHolder extends RecyclerView.ViewHolder {
         if (topic.getTitle() != null){
             topicCellTitle.setText(topic.getTitle());
         }
-        if(topic.getDate() != null){
-            SimpleDateFormat actualDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = null;
-            try {
-                date = actualDateFormat.parse(topic.getDate());
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if(date != null) {
-                String topicDate = finalDateFormat.format(date);
-                topicCellDate.setText(topicDate);
-            }
-        }
         if(topic.getContent() != null){
             topicCellContent.setText(topic.getContent());
         }

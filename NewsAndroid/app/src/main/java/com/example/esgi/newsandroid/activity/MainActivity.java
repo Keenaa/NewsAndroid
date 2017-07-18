@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Realm realm = Realm.getDefaultInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
+        displayListNews();
     }
 
     @Override

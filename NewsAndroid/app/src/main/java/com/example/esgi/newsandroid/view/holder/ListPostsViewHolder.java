@@ -48,18 +48,7 @@ public class ListPostsViewHolder extends RecyclerView.ViewHolder {
         if (post.getTitle() != null) {
             postCellTitle.setText(post.getTitle());
         }
-        if (post.getDate() != null) {
-            SimpleDateFormat actualDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = null;
-            try {
-                date = actualDateFormat.parse(post.getDate());
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            String postDate = finalDateFormat.format(date);
-            postCellDate.setText(postDate);
-        }
         if (post.getContent() != null) {
             postCellContent.setText(post.getContent());
         }

@@ -84,19 +84,6 @@ public class ListCommentsFragment extends Fragment {
     }
 
     private void getComments(){
-
-        ApiService.getInstance(getContext()).getComments(new ApiService.ApiResult<ArrayList<Comment>>() {
-            @Override
-            public void success(ArrayList<Comment> res) {
-                commentRecyclerView.setAdapter(new ListCommentsAdapter(res));
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void error(int code, String message) {
-
-            }
-        });
     }
 
     public static ListCommentsFragment newInstance() {
