@@ -16,13 +16,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -193,6 +191,16 @@ public class ApiService {
                     int statusCode = response.code();
                     if(statusCode == HTTP_200) {
                         final ArrayList<Post> posts = response.body();
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                RealmList<Post> postRealmList = new RealmList<>();
+                                postRealmList.addAll(posts);
+                                realm.copyToRealmOrUpdate(postRealmList);
+
+                            }
+                        });
                         callback.success(posts);
                     }
                 }
@@ -203,31 +211,15 @@ public class ApiService {
                     t.printStackTrace();
                 }
             });
+        } else {
+            Realm realm = Realm.getDefaultInstance();
+            RealmResults<Post> posts = realm.where(Post.class).equalTo("topic",topic.getId()).findAll();
+            ArrayList<Post> postArrayList = new ArrayList<>();
+            postArrayList.addAll(posts);
+            callback.success(postArrayList);
         }
     }
 
-    public void getTopicById(Topic topic, final ApiResult<Topic> callback){
-        if (verifyConnection()){
-            Call<Topic> call = this.topicsNetwork.getTopicById(topic.getId(), "Bearer "+ SessionData.getINSTANCE().getToken());
-            call.enqueue(new Callback<Topic>() {
-                @Override
-                public void onResponse(Call<Topic> call, Response<Topic> response) {
-                    int statusCode = response.code();
-                    if (statusCode == HTTP_200){
-                        Topic topic = response.body();
-                        callback.success(topic);
-                    } else {
-                        callback.error(statusCode, response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Topic> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-        }
-    }
 
     public void deleteTopic(Topic topic, final ApiResult<String> callback){
        if(verifyConnection()){

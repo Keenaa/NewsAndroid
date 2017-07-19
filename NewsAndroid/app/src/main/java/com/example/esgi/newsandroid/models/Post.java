@@ -28,6 +28,9 @@ public class Post extends RealmObject {
     @SerializedName("author")
     @Expose
     private String author;
+    @SerializedName("topic")
+    @Expose
+    private String topic;
 
     public String getTitle() {
         return title;
@@ -67,5 +70,13 @@ public class Post extends RealmObject {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }
